@@ -5,6 +5,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { DocContent } from "./doc/doc-content";
 import { DocSidebar } from "./doc/doc-sidebar";
 import { DocHeader, MobileDocHeader } from "./doc/doc-header";
+import { LoadingContent } from "./doc/loading-content";
 import { cn } from "@/lib/utils";
 
 interface DocComponentProps {
@@ -25,8 +26,25 @@ export const DocComponent: React.FC<DocComponentProps> = ({
   className,
 }) => {
   // Parse content and generate TOC
-  const sections = parseContent(content);
-  const tocItems = generateTableOfContents(sections);
+  const [isLoading, setIsLoading] = useState(true);
+  const [sections, setSections] = useState([]);
+  const [tocItems, setTocItems] = useState([]);
+  
+  useEffect(() => {
+    const parseAndSetContent = async () => {
+      setIsLoading(true);
+      try {
+        const parsedSections = parseContent(content);
+        const parsedTocItems = generateTableOfContents(parsedSections);
+        setSections(parsedSections);
+        setTocItems(parsedTocItems);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    parseAndSetContent();
+  }, [content]);
   
   // State and refs
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -78,11 +96,16 @@ export const DocComponent: React.FC<DocComponentProps> = ({
         tocItems={tocItems}
         isOpen={sidebarOpen}
         onSectionClick={scrollToSection}
+        isLoading={isLoading}
       />
 
       <main className="flex-1 pb-16">
         <DocHeader title={title} logoUrl={logoUrl} />
-        <DocContent sections={sections} sectionRefs={sectionRefs} />
+        {isLoading ? (
+          <LoadingContent />
+        ) : (
+          <DocContent sections={sections} sectionRefs={sectionRefs} />
+        )}
       </main>
     </div>
   );

@@ -1,8 +1,7 @@
-
 import React from "react";
-import { BookOpen } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { TableOfContents } from "@/components/ui/toc";
+import { Book } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 import { TocItem } from "@/types/documentation";
 import { cn } from "@/lib/utils";
 
@@ -14,6 +13,7 @@ interface DocSidebarProps {
   tocItems: TocItem[];
   isOpen: boolean;
   onSectionClick: (id: string) => void;
+  isLoading?: boolean;
 }
 
 export const DocSidebar: React.FC<DocSidebarProps> = ({
@@ -24,34 +24,52 @@ export const DocSidebar: React.FC<DocSidebarProps> = ({
   tocItems,
   isOpen,
   onSectionClick,
+  isLoading = false,
 }) => {
   return (
     <aside
       data-toc
       className={cn(
-        "bg-muted/40 w-full md:w-64 lg:w-72 md:flex flex-col fixed md:sticky top-0 bottom-0 left-0 z-30 md:z-0 md:h-screen overflow-hidden transition-transform",
-        isOpen ? "flex translate-x-0" : "hidden md:flex md:translate-x-0 -translate-x-full"
+        "w-64 shrink-0 border-r bg-sidebar fixed inset-y-0 z-20 -translate-x-full transition-transform duration-200 md:relative md:translate-x-0",
+        isOpen && "translate-x-0"
       )}
     >
-      <div className="hidden md:flex items-center space-x-2 p-4 border-b">
-        {logoUrl ? (
-          <img src={logoUrl} alt={title} className="h-8 w-auto" />
-        ) : (
-          <BookOpen className="h-6 w-6 text-primary" />
+      <div className="sticky top-0 bg-sidebar pt-4">
+        <div className="px-4 flex items-center space-x-2 mb-4">
+          {logoUrl ? (
+            <img src={logoUrl} alt={title} className="h-8 w-auto" />
+          ) : (
+            <Book className="h-6 w-6 text-primary" />
+          )}
+          <h2 className="font-semibold">{title}</h2>
+        </div>
+        {(author || updatedAt) && (
+          <div className="px-4 py-2 text-sm text-muted-foreground border-b">
+            {author && <p>Author: {author}</p>}
+            {updatedAt && <p>Updated: {updatedAt}</p>}
+          </div>
         )}
-        <h1 className="text-lg font-semibold truncate">{title}</h1>
       </div>
       
-      <ScrollArea className="flex-1 p-4 pb-16">
-        <TableOfContents items={tocItems} onItemClick={onSectionClick} />
+      <ScrollArea className="h-[calc(100vh-8rem)]">
+        <nav className="p-4">
+          {isLoading ? (
+            <div className="space-y-4">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <div key={i} className="space-y-2">
+                  <Skeleton className="h-4 w-3/4" />
+                  <div className="pl-4 space-y-2">
+                    <Skeleton className="h-3 w-2/3" />
+                    <Skeleton className="h-3 w-1/2" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <TableOfContents items={tocItems} onItemClick={onSectionClick} />
+          )}
+        </nav>
       </ScrollArea>
-      
-      {(author || updatedAt) && (
-        <div className="p-4 border-t text-xs text-muted-foreground">
-          {author && <div>Author: {author}</div>}
-          {updatedAt && <div>Updated: {updatedAt}</div>}
-        </div>
-      )}
     </aside>
   );
 };
