@@ -1,6 +1,5 @@
 
-import React, { useState, useEffect, useRef } from "react";
-import { List } from "lucide-react";
+import React, { useState, useEffect } from "react";
 import { parseContent, generateTableOfContents } from "@/utils/docUtils";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { DocContent } from "./doc/doc-content";
@@ -31,7 +30,7 @@ export const DocComponent: React.FC<DocComponentProps> = ({
   
   // State and refs
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const sectionRefs = React.useRef<Record<string, HTMLDivElement | null>>({});
   
   // Check if mobile
   const isMobile = useIsMobile();
