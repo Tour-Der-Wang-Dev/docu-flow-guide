@@ -25,11 +25,13 @@ export const DocComponent: React.FC<DocComponentProps> = ({
   updatedAt,
   className,
 }) => {
-  // Parse content and generate TOC
   const [isLoading, setIsLoading] = useState(true);
   const [sections, setSections] = useState([]);
   const [tocItems, setTocItems] = useState([]);
-  
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const sectionRefs = React.useRef<Record<string, HTMLDivElement | null>>({});
+  const isMobile = useIsMobile();
+
   useEffect(() => {
     const parseAndSetContent = async () => {
       setIsLoading(true);
@@ -45,13 +47,6 @@ export const DocComponent: React.FC<DocComponentProps> = ({
     
     parseAndSetContent();
   }, [content]);
-  
-  // State and refs
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const sectionRefs = React.useRef<Record<string, HTMLDivElement | null>>({});
-  
-  // Check if mobile
-  const isMobile = useIsMobile();
   
   // Handle section navigation
   const scrollToSection = (id: string) => {

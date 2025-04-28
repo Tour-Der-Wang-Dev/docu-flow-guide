@@ -4,6 +4,7 @@ import { Book } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { TocItem } from "@/types/documentation";
 import { cn } from "@/lib/utils";
+import { TableOfContents } from "@/components/ui/toc";
 
 interface DocSidebarProps {
   title: string;
