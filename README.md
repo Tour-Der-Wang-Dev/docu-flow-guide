@@ -1,8 +1,76 @@
-# Welcome to your Lovable project
+
+# Documentation Component
+
+This project provides a comprehensive documentation component built with React, TypeScript, and Tailwind CSS. It's designed to help you display structured information in a clean, organized format.
 
 ## Project info
 
 **URL**: https://lovable.dev/projects/81e577ff-4e8f-42eb-b5c5-f6d4930cb017
+
+## Features
+
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
+- **Table of Contents**: Automatically generated from document headings
+- **Code Highlighting**: Special formatting for code blocks with copy functionality
+- **Clean Typography**: Well-structured headings and paragraphs
+- **Navigation**: Easy navigation between document sections
+
+## Component Structure
+
+The project consists of several key components:
+
+1. `DocComponent`: The main documentation component
+2. `TableOfContents`: Component for navigating between document sections
+3. `docUtils`: Utility functions for parsing and processing documentation content
+
+## How to Use
+
+The documentation component can be easily integrated into your React application:
+
+```jsx
+import { DocComponent } from "./components/doc-component";
+
+// Your documentation content in markdown-like format
+const myDocContent = `
+# Introduction
+
+This is an introduction to my documentation.
+
+## Getting Started
+
+Here's how to get started.
+
+\`\`\`
+// Example code
+const example = () => {
+  return "Hello world";
+};
+\`\`\`
+`;
+
+// Render the component
+const MyDocPage = () => (
+  <DocComponent 
+    title="My Documentation"
+    content={myDocContent}
+    author="Your Name"
+    updatedAt="April 28, 2025"
+  />
+);
+```
+
+## Props
+
+The `DocComponent` accepts several props for customization:
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `title` | string | Document title |
+| `content` | string | Document content in markdown-like format |
+| `logoUrl` | string (optional) | URL for a logo image |
+| `author` | string (optional) | Author of the document |
+| `updatedAt` | string (optional) | Last update date |
+| `className` | string (optional) | CSS class name for additional styling |
 
 ## How can I edit this code?
 
@@ -36,21 +104,7 @@ npm i
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
+## Technologies Used
 
 This project is built with:
 
@@ -60,13 +114,13 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
-## How can I deploy this project?
+## Deployment
 
 Simply open [Lovable](https://lovable.dev/projects/81e577ff-4e8f-42eb-b5c5-f6d4930cb017) and click on Share -> Publish.
 
-## Can I connect a custom domain to my Lovable project?
+## Custom Domain
 
-Yes, you can!
+Yes, you can connect a custom domain!
 
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 

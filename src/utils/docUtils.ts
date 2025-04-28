@@ -104,25 +104,9 @@ export function generateTableOfContents(sections: DocSection[]): TocItem[] {
   return toc;
 }
 
-// Function to render content with syntax highlighting and formatting
-export function renderDocContent(content: string): JSX.Element {
-  // This is a simplified renderer
-  // In a real implementation, you would use a markdown renderer library
-  
-  const paragraphs = content.split('\n\n').map((p, index) => {
-    // Check if this is a code block
-    if (p.startsWith('```') && p.endsWith('```')) {
-      const code = p.slice(3, -3);
-      return (
-        <pre key={index} className="bg-muted p-4 rounded-md my-4 overflow-x-auto">
-          <code>{code}</code>
-        </pre>
-      );
-    }
-    
-    // Regular paragraph
-    return <p key={index} className="my-4">{p}</p>;
-  });
-  
-  return <>{paragraphs}</>;
+// Modified function that doesn't return JSX elements
+export function renderDocContent(content: string): string {
+  // This function no longer returns JSX, just processes the content
+  // In a real implementation, rendering would happen in the component
+  return content;
 }

@@ -1,8 +1,7 @@
-
 import React, { useState, useEffect, useRef } from "react";
 import { Book, FileText, Copy, BookOpen, List } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { parseContent, generateTableOfContents, renderDocContent } from "@/utils/docUtils";
+import { parseContent, generateTableOfContents } from "@/utils/docUtils";
 import { DocPage, DocSection } from "@/types/documentation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
